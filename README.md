@@ -8,8 +8,8 @@ The simulator is based on the same instruction set and operational semantics as 
 
 The detailed specifications for the ARAMS simulator can be found in the `docs` directory:
 
-- [RAM Specification](docs/ram-spec.md) Describes the abstract machine model, including accumulator, registers, values, and the program counter.
-- [Language Specification](docs/language-spec.md) Defines the RAM assembly language syntax, instructions, operands, labels, and comments.
+- [RAM Specification](docs/ram-spec.md) Describes the abstract machine model and its structure.
+- [Language Specification](docs/language-spec.md) Defines the RAM assembly language syntax, instructions and operands.
 
 ## License
 
