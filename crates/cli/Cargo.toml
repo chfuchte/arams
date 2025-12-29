@@ -1,0 +1,10 @@
+[package]
+name = "cli"
+description = "CLI tool for executing code inside of the random-access machine (RAM) simulation"
+authors = ["Christian Fuchte"]
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]

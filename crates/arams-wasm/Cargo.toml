@@ -1,0 +1,10 @@
+[package]
+name = "arams-wasm"
+description = "WASM bindings for the random-access machine (RAM) simulation"
+authors = ["Christian Fuchte"]
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
