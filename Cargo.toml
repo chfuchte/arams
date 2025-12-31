@@ -9,4 +9,4 @@ license = "MIT"
 repository = "https://github.com/chfuchte/arams"
 
 [workspace.dependencies]
-core ={ path = "crates/core" }
+core = { path = "crates/core" }
