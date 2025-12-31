@@ -21,8 +21,8 @@ This document describes the language specification used for the simulated RAM as
   - [JNZERO](#jnzero)
   - [END](#end)
 - [Operands](#operands)
-  - [Direct Addressing](#direct-addressing)
   - [Immediate Values](#immediate-values)
+  - [Direct Addressing](#direct-addressing)
   - [Indirect Addressing](#indirect-addressing)
 - [Labels](#labels)
 - [Comments](#comments)
@@ -110,15 +110,15 @@ Marks the end of the program by setting the [program counter](ram-spec.md#progra
 
 ### Immediate Values
 
-Syntax: `<register_address>`
-
-Accesses the value stored in the given register.
-
-### Direct Addressing
-
 Syntax: `#<value>`
 
 Uses a constant value directly.
+
+### Direct Addressing
+
+Syntax: `<register_address>`
+
+Accesses the value stored in the given register.
 
 ### Indirect Addressing
 
