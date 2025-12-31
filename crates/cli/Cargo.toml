@@ -7,4 +7,12 @@ version.workspace = true
 license.workspace = true
 repository.workspace = true
 
+[[bin]]
+name = "arams"
+path = "src/main.rs"
+
 [dependencies]
+clap = { version = "4.5.53", features = ["cargo"] }
+
+[build-dependencies]
+chrono = "0.4.42"

@@ -2,7 +2,7 @@
 
 ARAMS is a simulator for an Abstract Random-Access Machine (RAM) intended for educational use, with a particular focus on the Hessian Landesabitur (Informatik).
 
-The simulator is based on the same instruction set and operational semantics as [the Remasp GUI](https://github.com/groehner/Remasp) and is fully compatible with the RAM/register machine model used in Hessian computer science education, as described [here](https://arbeitsplattform.bildung.hessen.de/fach/informatik/registermaschine.html).
+The simulator is based on the same instruction set and operational semantics as the [Remasp GUI](https://github.com/groehner/Remasp) and is fully compatible with the RAM/register machine model used in Hessian computer science education, as described [here](https://arbeitsplattform.bildung.hessen.de/fach/informatik/registermaschine.html).
 
 ## Documentation
 
