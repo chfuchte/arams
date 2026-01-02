@@ -1,7 +1,17 @@
-mod tokenizer;
+mod executor;
+mod machine;
+mod parser;
+mod program;
+mod source_code;
 
 #[cfg(test)]
 mod tests;
 
 pub mod errors;
-pub use tokenizer::IntoSourceCode;
+pub mod tokenizer;
+
+pub use executor::execute;
+pub use machine::Machine;
+pub use parser::parse;
+pub use program::Program;
+pub use source_code::IntoSourceCode;

@@ -1,6 +1,11 @@
+use crate::IntoSourceCode;
+
 use super::token::Token;
 
-pub(crate) fn tokenize(source_code: impl IntoSourceCode) -> Vec<Token> {
+/// Turns source code into a vector of tokens which then can be used for syntax highlighting, etc.
+/// `tokenize()` should not fail, even on invalid source code as 'invalid' tokens are treated as possible arguments 
+/// since arguments like labels, operands and invalid tokens can't be distinguished without context (knowledge of tokens before and after them)
+pub fn tokenize(source_code: impl IntoSourceCode) -> Vec<Token> {
     let mut tokens = vec![];
     let lines = source_code.into_lines();
 
@@ -56,44 +61,4 @@ pub(crate) fn tokenize(source_code: impl IntoSourceCode) -> Vec<Token> {
     }
 
     tokens
-}
-
-pub trait IntoSourceCode {
-    fn into_lines(self) -> Vec<String>;
-}
-
-impl IntoSourceCode for Vec<String> {
-    fn into_lines(self) -> Vec<String> {
-        self
-    }
-}
-
-impl IntoSourceCode for &str {
-    fn into_lines(self) -> Vec<String> {
-        self.lines().map(|line| line.to_string()).collect()
-    }
-}
-
-impl IntoSourceCode for String {
-    fn into_lines(self) -> Vec<String> {
-        self.lines().map(|line| line.to_string()).collect()
-    }
-}
-
-impl IntoSourceCode for &String {
-    fn into_lines(self) -> Vec<String> {
-        self.lines().map(|line| line.to_string()).collect()
-    }
-}
-
-impl IntoSourceCode for &[String] {
-    fn into_lines(self) -> Vec<String> {
-        self.iter().cloned().collect()
-    }
-}
-
-impl IntoSourceCode for &[&str] {
-    fn into_lines(self) -> Vec<String> {
-        self.iter().map(|&line| line.to_string()).collect()
-    }
 }

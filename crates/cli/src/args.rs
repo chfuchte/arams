@@ -1,13 +1,26 @@
-use clap::{ArgAction, arg, command, value_parser};
+use std::path::PathBuf;
+
+use clap::{ArgGroup, arg, command, value_parser};
 
 use crate::constants::{
     AFTER_HELP_TEXT, BIN_NAME, BUILD_TIMESTAMP_UTC, LAST_COMMIT_DATE, LAST_COMMIT_ID,
     LAST_COMMIT_ID_LONG, PROJECT_DESCRIPTION, VERSION,
 };
 
-pub(crate) struct Args {}
+pub(crate) struct Args {
+    file_path: PathBuf,
+}
 
-impl Args {}
+impl Args {
+    pub(crate) fn new(file_path: PathBuf) -> Self {
+        assert!(file_path.is_absolute(), "file_path must be absolute");
+        Self { file_path }
+    }
+
+    pub(crate) fn file_path(&self) -> &PathBuf {
+        &self.file_path
+    }
+}
 
 pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
     let matches = command!()
@@ -19,23 +32,23 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
         .next_line_help(true)
         // version
         .disable_version_flag(true)
-        .arg(
-            arg!(-v --version "Print version")
-                .value_parser(value_parser!(bool))
-                .action(ArgAction::SetTrue),
-        )
+        .arg(arg!(-v --version "Print version").value_parser(value_parser!(bool)))
         // license
-        .arg(
-            arg!(--license "Print license")
-                .value_parser(value_parser!(bool))
-                .action(ArgAction::SetTrue),
-        )
+        .arg(arg!(--license "Print license").value_parser(value_parser!(bool)))
         // build info
+        .arg(arg!(--"build-info" "Print build information" ).value_parser(value_parser!(bool)))
+        .group(ArgGroup::new("readonly-info-args").multiple(false).args([
+            "version",
+            "license",
+            "build-info",
+        ]))
+        // input file
         .arg(
-            arg!(--"build-info" "Print build information" )
-                .value_parser(value_parser!(bool))
-                .action(ArgAction::SetTrue),
+            arg!([FILE] "Input file to process")
+                .value_parser(value_parser!(PathBuf))
+                .required_unless_present("readonly-info-args"),
         )
+        .group(ArgGroup::new("run-args").multiple(true).args(["FILE"]))
         .get_matches();
 
     if matches.get_flag("license") {
@@ -49,7 +62,14 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
         std::process::exit(0);
     }
 
-    Ok(Args {})
+    let file_path = matches
+        .get_one::<PathBuf>("FILE")
+        .expect("<FILE> is a required argument")
+        .to_owned()
+        .canonicalize()
+        .expect("Failed to canonicalize file path");
+
+    Ok(Args { file_path })
 }
 
 fn print_license() {

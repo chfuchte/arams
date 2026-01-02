@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub(crate) enum Token {
+pub enum Token {
     Load,
     Store,
     Add,
