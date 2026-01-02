@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 #[test]
 fn test_machine_creation() {
-    let mut machine = Machine::new();
+    let mut machine = Machine::default();
     machine.add(10);
     assert_eq!(machine.get_accumulator(), 10);
     machine.store(0);

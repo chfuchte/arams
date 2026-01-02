@@ -69,7 +69,7 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
         .canonicalize()
         .expect("Failed to canonicalize file path");
 
-    Ok(Args { file_path })
+    Ok(Args::new(file_path))
 }
 
 fn print_license() {
@@ -89,11 +89,10 @@ fn print_version() {
 
 fn print_build_info() {
     print_version();
-    match (LAST_COMMIT_ID_LONG, BUILD_TIMESTAMP_UTC) {
-        (Some(commit_id), Some(build_timestamp)) => {
-            println!("build from commit: {}", commit_id);
-            println!("build at {} UTC", build_timestamp);
-        }
-        _ => {}
+    if let Some(commit_id) = LAST_COMMIT_ID_LONG {
+        println!("build from commit: {}", commit_id);
+    }
+    if let Some(build_timestamp) = BUILD_TIMESTAMP_UTC {
+        println!("build at {} UTC", build_timestamp);
     }
 }

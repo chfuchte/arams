@@ -11,7 +11,7 @@ pub fn execute(
     mut program: Program,
     registers: Option<HashMap<Register, Value>>,
 ) -> Result<Machine, RuntimeError> {
-    let mut machine = Machine::new();
+    let mut machine = Machine::default();
 
     if let Some(regs) = registers {
         machine.preseed_registers(regs);
@@ -77,18 +77,18 @@ pub fn execute(
                 });
             }
             Instruction::Goto(label) => {
-                program.goto(label).map_err(|e| e)?;
+                program.goto(label)?;
                 continue;
             }
             Instruction::Jzero(label) => {
                 if machine.get_accumulator() == 0 {
-                    program.goto(label).map_err(|e| e)?;
+                    program.goto(label)?;
                     continue;
                 }
             }
             Instruction::Jnzero(label) => {
                 if machine.get_accumulator() != 0 {
-                    program.goto(label).map_err(|e| e)?;
+                    program.goto(label)?;
                     continue;
                 }
             }

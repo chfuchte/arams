@@ -8,14 +8,6 @@ pub struct Machine {
 }
 
 impl Machine {
-    pub fn new() -> Self {
-        Self {
-            accumulator: 0,
-            registers: HashMap::new(),
-            state: MachineState::Running,
-        }
-    }
-
     pub fn get_accumulator(&self) -> Value {
         self.accumulator
     }
@@ -81,6 +73,16 @@ impl Machine {
 
     pub fn store(&mut self, address: Register) {
         self.set_register_value(address, self.accumulator);
+    }
+}
+
+impl Default for Machine {
+    fn default() -> Self {
+        Self {
+            accumulator: 0,
+            registers: HashMap::new(),
+            state: MachineState::Running,
+        }
     }
 }
 

@@ -176,12 +176,14 @@ pub fn parse(source_code: impl IntoSourceCode) -> Result<Program, Vec<ParserErro
 
 fn operand_from_str(s: &str) -> Result<Operand, ParserError> {
     if s.starts_with('#') {
-        let value = s[1..]
+        let value = s
+            .trim_start_matches('#')
             .parse::<Value>()
             .map_err(|_| ParserError::AnyError(s.to_string()))?;
         Ok(Operand::Immediate(value))
     } else if s.starts_with('*') {
-        let address = s[1..]
+        let address = s
+            .trim_start_matches('*')
             .parse::<Register>()
             .map_err(|_| ParserError::AnyError(s.to_string()))?;
         Ok(Operand::IndirectAddress(address))
@@ -195,7 +197,8 @@ fn operand_from_str(s: &str) -> Result<Operand, ParserError> {
 
 fn address_from_str(s: &str) -> Result<Address, ParserError> {
     if s.starts_with('*') {
-        let address = s[1..]
+        let address = s
+            .trim_start_matches('*')
             .parse::<Register>()
             .map_err(|_| ParserError::AnyError(s.to_string()))?;
         Ok(Address::Indirect(address))

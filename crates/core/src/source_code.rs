@@ -34,7 +34,7 @@ impl IntoSourceCode for &String {
 
 impl IntoSourceCode for &[String] {
     fn into_lines(self) -> Vec<String> {
-        self.iter().cloned().collect()
+        self.to_vec()
     }
 }
 
