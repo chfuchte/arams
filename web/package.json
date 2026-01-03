@@ -1,6 +1,6 @@
 {
     "name": "arams-web",
-    "version": "0.1.0",
+    "version": "0.1.0-alpha",
     "type": "module",
     "scripts": {
         "start": "vite",
@@ -10,7 +10,7 @@
         "format": "prettier --write ."
     },
     "dependencies": {
-        "@chfuchte/arams": "0.1.0",
+        "@chfuchte/arams": "0.1.0-alpha",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "solid-js": "^1.9.10",

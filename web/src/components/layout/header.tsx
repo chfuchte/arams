@@ -8,7 +8,7 @@ export const Header: Component = () => {
         <header class="bg-darker text-foreground flex flex-row items-center gap-4 px-4">
             <div class="inline-flex cursor-default flex-row items-center gap-2 select-none">
                 <h1 class="text-sm font-bold">ARAMS</h1>
-                <h2 class="text-muted-foreground text-sm">v0.1.0</h2>
+                <h2 class="text-muted-foreground text-sm">v0.1.0-alpha</h2>
             </div>
             <Seperator orientation="vertical" />
             <Spacer />
