@@ -45,7 +45,7 @@ jobs:
                 pkg.name = '@chfuchte/arams-wasm';
                 pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
                 fs.writeFileSync(p, JSON.stringify(pkg, null, 2));
-                "
+                " && npm pgk 
 
             - uses: actions/setup-node@v4
               with:
