@@ -1,6 +1,6 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
-import initWASM from "@chfuchte/arams-wasm";
+import initWASM from "@chfuchte/arams";
 import App from "@/App";
 
 import "@/styles/globals.css";

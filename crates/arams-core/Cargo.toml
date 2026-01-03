@@ -1,5 +1,5 @@
 [package]
-name = "core"
+name = "arams-core"
 description = "Core logic of the random-access machine (RAM) simulation"
 authors = ["Christian Fuchte"]
 edition.workspace = true

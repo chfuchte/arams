@@ -8,8 +8,9 @@ license.workspace = true
 repository.workspace = true
 
 [lib]
+name = "arams_wasm"
 crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.106"
-core = { workspace = true }
+arams-core = { workspace = true }

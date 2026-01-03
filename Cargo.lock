@@ -62,10 +62,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "arams-core"
+version = "0.1.0"
+
+[[package]]
 name = "arams-wasm"
 version = "0.1.0"
 dependencies = [
- "core",
+ "arams-core",
  "wasm-bindgen",
 ]
 
@@ -141,6 +145,7 @@ checksum = "a1d728cc89cf3aee9ff92b05e62b19ee65a02b5702cff7d5a377e32c6ae29d8d"
 name = "cli"
 version = "0.1.0"
 dependencies = [
+ "arams-core",
  "chrono",
  "clap",
 ]
@@ -150,10 +155,6 @@ name = "colorchoice"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b05b61dc5112cbb17e4b6cd61790d9845d13888356391624cbe7e41efeac1e75"
-
-[[package]]
-name = "core"
-version = "0.1.0"
 
 [[package]]
 name = "core-foundation-sys"
