@@ -1,5 +1,6 @@
 /* @refresh reload */
 import { render } from "solid-js/web";
+import initWASM from "arams-wasm";
 import App from "@/App";
 
 import "@/styles/globals.css";
@@ -11,5 +12,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
         "Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?",
     );
 }
+
+await initWASM();
 
 render(() => <App />, root!);
