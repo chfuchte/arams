@@ -9,5 +9,13 @@
         ".": {
             "import": "./arams_wasm.js"
         }
+    },
+    "repository": {
+        "type": "git",
+        "directory": "../../",
+        "url": "https://github.com/chfuchte/arams.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     }
 }
