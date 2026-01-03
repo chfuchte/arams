@@ -1,4 +1,4 @@
-name: Create Prebuilts on Release
+name: Create CLI Prebuilts
 
 permissions:
     contents: write

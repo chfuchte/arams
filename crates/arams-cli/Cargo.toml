@@ -12,7 +12,7 @@ name = "arams"
 path = "src/main.rs"
 
 [dependencies]
-core = { workspace = true }
+arams-core = { workspace = true }
 clap = { version = "4.5.53", features = ["cargo"] }
 
 [build-dependencies]

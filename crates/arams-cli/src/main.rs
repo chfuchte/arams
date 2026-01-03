@@ -2,7 +2,7 @@ use crate::{
     args::{Input, parse_args_or_exit},
     errors::{Error, StatusCode},
 };
-use core::IntoSourceCode;
+use arams_core::IntoSourceCode;
 
 mod args;
 mod constants;

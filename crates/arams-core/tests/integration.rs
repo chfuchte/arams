@@ -1,4 +1,4 @@
-use core::*;
+use arams_core::*;
 use std::collections::HashMap;
 
 #[test]

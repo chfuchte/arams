@@ -1,15 +1,7 @@
 {
-    "name": "@chfuchte/arams-wasm",
+    "name": "@chfuchte/arams",
     "version": "0.1.0",
     "type": "module",
-    "files": [
-        "*"
-    ],
-    "exports": {
-        ".": {
-            "import": "./arams_wasm.js"
-        }
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/chfuchte/arams.git",

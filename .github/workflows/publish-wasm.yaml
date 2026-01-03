@@ -1,4 +1,4 @@
-name: Publish WASM package to GitHub npm registry
+name: Publish WASM package to GitHub Packages
 
 permissions:
     contents: read
@@ -39,14 +39,15 @@ jobs:
 
             - name: Fix package.json for GitHub Packages
               run: |
-                node -e "
-                const fs = require('fs');
-                const p = 'dist/package.json';
-                const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
-                pkg.name = '@chfuchte/arams-wasm';
-                pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
-                fs.writeFileSync(p, JSON.stringify(pkg, null, 2));
-                " && cd dist && npm pkg fix
+                  cd dist
+                  node -e "
+                    const fs = require('fs');
+                    const p = 'package.json';
+                    const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
+                    pkg.name = '@chfuchte/arams';
+                    pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+                    fs.writeFileSync(p, JSON.stringify(pkg, null, 2));"
+                  npm pkg fix
 
             - uses: actions/setup-node@v4
               with:
