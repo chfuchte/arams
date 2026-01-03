@@ -1,4 +1,4 @@
-import { hello_from_wasm } from "@chfuchte/arams-wasm";
+import { hello_from_wasm } from "@chfuchte/arams";
 import { Component } from "solid-js";
 
 export const WASMTest: Component = () => {
