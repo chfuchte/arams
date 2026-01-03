@@ -1,11 +1,9 @@
-use std::path::PathBuf;
-
-use clap::{ArgGroup, arg, command, value_parser};
-
 use crate::constants::{
     AFTER_HELP_TEXT, BIN_NAME, BUILD_TIMESTAMP_UTC, LAST_COMMIT_DATE, LAST_COMMIT_ID,
     LAST_COMMIT_ID_LONG, PROJECT_DESCRIPTION, VERSION,
 };
+use clap::{ArgGroup, arg, command, value_parser};
+use std::path::PathBuf;
 
 pub(crate) struct Args {
     file_path: PathBuf,

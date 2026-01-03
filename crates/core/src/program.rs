@@ -1,9 +1,8 @@
-use std::collections::HashMap;
-
 use crate::{
     errors::RuntimeError,
     machine::{Register, Value},
 };
+use std::collections::HashMap;
 
 pub struct ProgramBuilder {
     lines: Vec<Line>,

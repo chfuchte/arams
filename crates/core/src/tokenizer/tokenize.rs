@@ -1,9 +1,7 @@
-use crate::IntoSourceCode;
-
-use super::token::Token;
+use crate::{IntoSourceCode, tokenizer::Token};
 
 /// Turns source code into a vector of tokens which then can be used for syntax highlighting, etc.
-/// `tokenize()` should not fail, even on invalid source code as 'invalid' tokens are treated as possible arguments 
+/// `tokenize()` should not fail, even on invalid source code as 'invalid' tokens are treated as possible arguments
 /// since arguments like labels, operands and invalid tokens can't be distinguished without context (knowledge of tokens before and after them)
 pub fn tokenize(source_code: impl IntoSourceCode) -> Vec<Token> {
     let mut tokens = vec![];

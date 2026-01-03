@@ -1,7 +1,9 @@
-use crate::IntoSourceCode;
-use crate::errors::ParserError;
-use crate::machine::{Register, Value};
-use crate::program::{Address, Instruction, Line, Operand, Program, ProgramBuilder};
+use crate::{
+    IntoSourceCode,
+    errors::ParserError,
+    machine::{Register, Value},
+    program::{Address, Instruction, Line, Operand, Program, ProgramBuilder},
+};
 
 /// Parses the given source code into a `Program` which represents the AST of the code.
 pub fn parse(source_code: impl IntoSourceCode) -> Result<Program, Vec<ParserError>> {

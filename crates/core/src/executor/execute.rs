@@ -1,11 +1,10 @@
-use std::collections::HashMap;
-
 use crate::{
     Machine, Program,
     errors::RuntimeError,
     machine::{Register, Value},
     program::{Address, Instruction, Operand},
 };
+use std::collections::HashMap;
 
 pub fn execute(
     mut program: Program,
