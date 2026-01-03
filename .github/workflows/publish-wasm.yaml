@@ -35,6 +35,7 @@ jobs:
                   mkdir -p dist
                   cp -r crates/arams-wasm/pkg/* dist/
                   cp crates/arams-wasm/README.md dist/ || true
+                  cp LICENSE.txt dist/ || true
 
             - name: Fix package.json for GitHub Packages
               run: |
