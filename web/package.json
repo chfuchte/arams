@@ -10,7 +10,6 @@
         "format": "prettier --write ."
     },
     "dependencies": {
-        "arams-wasm": "github:chfuchte/arams#dist",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "solid-js": "^1.9.9",
