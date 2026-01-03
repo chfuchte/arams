@@ -13,18 +13,18 @@
         "@chfuchte/arams-wasm": "0.1.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
-        "solid-js": "^1.9.9",
+        "solid-js": "^1.9.10",
         "tailwind-merge": "^3.4.0"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.1.13",
+        "@tailwindcss/vite": "^4.1.18",
         "@types/node": "^25.0.3",
         "prettier": "^3.7.4",
         "prettier-plugin-tailwindcss": "^0.7.2",
-        "solid-devtools": "^0.34.3",
-        "tailwindcss": "^4.1.13",
-        "typescript": "^5.9.2",
-        "vite": "^7.1.4",
-        "vite-plugin-solid": "^2.11.8"
+        "solid-devtools": "^0.34.4",
+        "tailwindcss": "^4.1.18",
+        "typescript": "^5.9.3",
+        "vite": "^7.3.0",
+        "vite-plugin-solid": "^2.11.10"
     }
 }
