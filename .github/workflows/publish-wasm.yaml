@@ -1,0 +1,49 @@
+name: Publish WASM package
+
+permissions:
+    contents: write
+
+on:
+    push:
+        tags:
+            - "wasm-v*"
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Install Rust
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: wasm32-unknown-unknown
+
+            - name: Install wasm-pack
+              run: cargo install wasm-pack
+
+            - name: Build WASM
+              run: |
+                  wasm-pack build crates/arams-wasm \
+                    --target web \
+                    --out-dir pkg \
+                    --release
+
+            - name: Prepare dist folder
+              run: |
+                  mkdir dist
+                  cp -r pkg/* dist/
+                  cp crates/arams-wasm/README.md dist/ || true
+
+            - name: Publish to dist branch
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_branch: dist
+                  publish_dir: dist
+                  force_orphan: true

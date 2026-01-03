@@ -15,3 +15,7 @@ pub use machine::Machine;
 pub use parser::parse;
 pub use program::Program;
 pub use source_code::IntoSourceCode;
+
+pub fn hello() -> String {
+    "Hello from core!".to_string()
+}

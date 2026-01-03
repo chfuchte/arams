@@ -10,20 +10,20 @@ This document describes the language specification used for the simulated RAM as
 
 - [Program](#program)
 - [Instructions](#instructions)
-  - [LOAD](#load)
-  - [STORE](#store)
-  - [ADD](#add)
-  - [SUB](#sub)
-  - [MUL](#mul)
-  - [DIV](#div)
-  - [GOTO](#goto)
-  - [JZERO](#jzero)
-  - [JNZERO](#jnzero)
-  - [END](#end)
+    - [LOAD](#load)
+    - [STORE](#store)
+    - [ADD](#add)
+    - [SUB](#sub)
+    - [MUL](#mul)
+    - [DIV](#div)
+    - [GOTO](#goto)
+    - [JZERO](#jzero)
+    - [JNZERO](#jnzero)
+    - [END](#end)
 - [Operands](#operands)
-  - [Immediate Values](#immediate-values)
-  - [Direct Addressing](#direct-addressing)
-  - [Indirect Addressing](#indirect-addressing)
+    - [Immediate Values](#immediate-values)
+    - [Direct Addressing](#direct-addressing)
+    - [Indirect Addressing](#indirect-addressing)
 - [Labels](#labels)
 - [Comments](#comments)
 
@@ -34,9 +34,9 @@ This document describes the language specification used for the simulated RAM as
 - Instruction keywords are **case-insensitive**.
 - If an instruction does not match the specification, an error is raised **before execution**.
 - Program execution terminates when:
-  - a division by `0` occurs
-  - the [`end`](#end) instruction is executed
-  - the end of the file is reached (no further instructions)
+    - a division by `0` occurs
+    - the [`end`](#end) instruction is executed
+    - the end of the file is reached (no further instructions)
 
 ## Instructions
 
