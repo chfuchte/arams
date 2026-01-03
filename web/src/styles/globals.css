@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "Inter";
+    font-display: swap;
+    src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    font-display: swap;
+    src: url("/fonts/RobotoMono-VariableFont_wght.ttf") format("truetype");
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans: "Inter", system-ui, -apple-system, Roboto, sans-serif;
+    --font-mono: "Roboto Mono", monospace;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-darker: var(--darker);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --darker: oklch(0.985 0 271.152);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(97.015% 0.00011 271.152);
+    --accent-foreground: oklch(0.205 0 0);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --darker: oklch(0.22213 0 271.152);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50 duration-150 ease-in-out;
+    }
+
+    html,
+    body {
+        @apply bg-background text-foreground font-sans antialiased transition-colors;
+    }
+
+    body {
+        --header-height: calc(var(--spacing) * 10);
+
+        header {
+            height: var(--header-height);
+        }
+
+        main {
+            min-height: calc(100dvh - var(--header-height));
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            @apply transition-none duration-0;
+        }
+    }
+}
