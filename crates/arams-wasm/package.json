@@ -12,8 +12,8 @@
     },
     "repository": {
         "type": "git",
-        "directory": "../../",
-        "url": "https://github.com/chfuchte/arams.git"
+        "url": "git+https://github.com/chfuchte/arams.git",
+        "directory": "crates/arams-wasm"
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com"

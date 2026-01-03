@@ -11,12 +11,10 @@ on:
     workflow_dispatch:
 
 jobs:
-    publish:
+    build:
         runs-on: ubuntu-latest
-
         steps:
-            - name: Checkout repo
-              uses: actions/checkout@v4
+            - uses: actions/checkout@v4
 
             - name: Install Rust
               uses: dtolnay/rust-toolchain@stable
@@ -33,19 +31,27 @@ jobs:
                     --out-dir pkg \
                     --release
 
-            - name: Prepare dist folder
+    publish:
+        needs: build
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  registry-url: https://npm.pkg.github.com/
+
+            - name: Prepare package for publishing
               run: |
                   mkdir dist
                   cp -r crates/arams-wasm/pkg/* dist/
                   cp crates/arams-wasm/README.md dist/ || true
 
-            - name: Setup npm auth for GitHub Packages
-              run: |
-                  echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-                  echo "@chfuchte:registry=https://npm.pkg.github.com" >> ~/.npmrc
+            - name: Publish to GitHub npm registry
+              run: npm publish --registry https://npm.pkg.github.com
+              working-directory: dist
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Publish to GitHub npm registry
-              run: npm publish
-              working-directory: dist
