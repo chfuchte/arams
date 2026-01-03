@@ -7,11 +7,10 @@ permissions:
 on:
     release:
         types: [created]
-
     workflow_dispatch:
 
 jobs:
-    build:
+    build-and-publish:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -31,24 +30,16 @@ jobs:
                     --out-dir pkg \
                     --release
 
-    publish:
-        needs: build
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
-        steps:
-            - uses: actions/checkout@v4
+            - name: Prepare package for publishing
+              run: |
+                  mkdir -p dist
+                  cp -r crates/arams-wasm/pkg/* dist/
+                  cp crates/arams-wasm/README.md dist/ || true
+
             - uses: actions/setup-node@v4
               with:
                   node-version: 20
                   registry-url: https://npm.pkg.github.com/
-
-            - name: Prepare package for publishing
-              run: |
-                  mkdir dist
-                  cp -r crates/arams-wasm/pkg/* dist/
-                  cp crates/arams-wasm/README.md dist/ || true
 
             - name: Publish to GitHub npm registry
               run: npm publish --registry https://npm.pkg.github.com
