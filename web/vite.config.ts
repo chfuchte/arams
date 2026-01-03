@@ -13,7 +13,7 @@ export default defineConfig({
         },
     },
     optimizeDeps: {
-        exclude: ["@chfuchte/arams-wasm"],
+        exclude: ["@chfuchte/arams"],
     },
     server: {
         port: 3000,
