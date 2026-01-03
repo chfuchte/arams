@@ -64,6 +64,10 @@ dependencies = [
 [[package]]
 name = "arams-wasm"
 version = "0.1.0"
+dependencies = [
+ "core",
+ "wasm-bindgen",
+]
 
 [[package]]
 name = "autocfg"
