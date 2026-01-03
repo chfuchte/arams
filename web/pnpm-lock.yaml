@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      arams-wasm:
-        specifier: github:chfuchte/arams#dist
-        version: https://codeload.github.com/chfuchte/arams/tar.gz/f1e53b4ceb7dd95b7456901db76be63185d7ddc6
+      '@chfuchte/arams-wasm':
+        specifier: 0.1.0
+        version: 0.1.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -140,6 +140,9 @@ packages:
   '@babel/types@7.28.4':
     resolution: {integrity: sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q==}
     engines: {node: '>=6.9.0'}
+
+  '@chfuchte/arams-wasm@0.1.0':
+    resolution: {integrity: sha512-9cMXWta4K/rWoSB3a/PQbgEa0boHOhHzObwGZKN1A736hiX7nHDUwX+fxD1LrP/m2eiymoaUUQN3pD1aolJxSQ==, tarball: https://npm.pkg.github.com/download/@chfuchte/arams-wasm/0.1.0/0712ac8a6f7e475683e91686e27420fbbefb9798}
 
   '@esbuild/aix-ppc64@0.25.11':
     resolution: {integrity: sha512-Xt1dOL13m8u0WE8iplx9Ibbm+hFAO0GsU2P34UNoDGvZYkY8ifSiy6Zuc1lYxfG7svWE2fzqCUmFp5HCn51gJg==}
@@ -605,10 +608,6 @@ packages:
 
   '@types/node@25.0.3':
     resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
-
-  arams-wasm@https://codeload.github.com/chfuchte/arams/tar.gz/f1e53b4ceb7dd95b7456901db76be63185d7ddc6:
-    resolution: {tarball: https://codeload.github.com/chfuchte/arams/tar.gz/f1e53b4ceb7dd95b7456901db76be63185d7ddc6}
-    version: 0.1.0
 
   babel-plugin-jsx-dom-expressions@0.40.1:
     resolution: {integrity: sha512-b4iHuirqK7RgaMzB2Lsl7MqrlDgQtVRSSazyrmx7wB3T759ggGjod5Rkok5MfHjQXhR7tRPmdwoeGPqBnW2KfA==}
@@ -1162,6 +1161,8 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
+  '@chfuchte/arams-wasm@0.1.0': {}
+
   '@esbuild/aix-ppc64@0.25.11':
     optional: true
 
@@ -1524,8 +1525,6 @@ snapshots:
   '@types/node@25.0.3':
     dependencies:
       undici-types: 7.16.0
-
-  arams-wasm@https://codeload.github.com/chfuchte/arams/tar.gz/f1e53b4ceb7dd95b7456901db76be63185d7ddc6: {}
 
   babel-plugin-jsx-dom-expressions@0.40.1(@babel/core@7.28.4):
     dependencies:
