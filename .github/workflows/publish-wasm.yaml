@@ -21,7 +21,7 @@ jobs:
                   targets: wasm32-unknown-unknown
 
             - name: Install wasm-pack
-              run: cargo install wasm-pack
+              run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
             - name: Build WASM
               run: |
@@ -35,6 +35,17 @@ jobs:
                   mkdir -p dist
                   cp -r crates/arams-wasm/pkg/* dist/
                   cp crates/arams-wasm/README.md dist/ || true
+
+            - name: Fix package.json for GitHub Packages
+              run: |
+                node -e "
+                const fs = require('fs');
+                const p = 'dist/package.json';
+                const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
+                pkg.name = '@chfuchte/arams-wasm';
+                pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+                fs.writeFileSync(p, JSON.stringify(pkg, null, 2));
+                " && npm pgk 
 
             - uses: actions/setup-node@v4
               with:
