@@ -11,7 +11,7 @@ mod fs;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     match run() {
-        Ok(_) => std::process::exit(StatusCode::NoError.into()),
+        Ok(_) => std::process::exit(StatusCode::Success.into()),
         Err(e) => {
             eprintln!("{}", e.standalone_message());
             std::process::exit(e.status_code().into());

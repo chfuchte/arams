@@ -1,5 +1,5 @@
 pub(crate) enum StatusCode {
-    NoError = 0,
+    Success = 0,
     UserError = 1,
     SystemError = 2,
 }
