@@ -37,7 +37,7 @@ jobs:
             - name: Prepare dist folder
               run: |
                   mkdir dist
-                  cp -r pkg/* dist/
+                  cp -r crates/arams-wasm/pkg/* dist/
                   cp crates/arams-wasm/README.md dist/ || true
 
             - name: Publish to dist branch
