@@ -1,40 +1,56 @@
 use crate::constants::{
-    AFTER_HELP_TEXT, BIN_NAME, BUILD_TIMESTAMP_UTC, LAST_COMMIT_DATE, LAST_COMMIT_ID,
-    LAST_COMMIT_ID_LONG, PROJECT_DESCRIPTION, VERSION,
+    BIN_NAME, BUILD_TIMESTAMP_UTC, LAST_COMMIT_DATE, LAST_COMMIT_ID, LAST_COMMIT_ID_LONG, VERSION,
 };
-use clap::{ArgGroup, arg, command, value_parser};
-use std::path::PathBuf;
+use clap::{ArgAction, ArgGroup, arg, builder::ValueParser, command, value_parser};
+use std::path::{Path, PathBuf};
 
+#[derive(Debug)]
 pub(crate) struct Args {
-    file_path: PathBuf,
+    input: Input,
 }
 
 impl Args {
-    pub(crate) fn new(file_path: PathBuf) -> Self {
-        assert!(file_path.is_absolute(), "file_path must be absolute");
-        Self { file_path }
+    pub(crate) fn new(input: Input) -> Self {
+        Self { input }
     }
 
-    pub(crate) fn file_path(&self) -> &PathBuf {
-        &self.file_path
+    pub(crate) fn input(&self) -> &Input {
+        &self.input
     }
 }
 
-pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
-    let matches = command!()
+#[derive(Clone, Debug)]
+pub(crate) enum Input {
+    File(PathBuf),
+    Raw(String),
+    None,
+}
+
+pub(crate) fn parse_args_or_exit() -> Result<Args, clap::Error> {
+    let command = command!()
         .name(BIN_NAME)
-        .about(PROJECT_DESCRIPTION)
+        .about(None)
         // help
-        .after_help(AFTER_HELP_TEXT)
-        .after_long_help(AFTER_HELP_TEXT)
-        .next_line_help(true)
+        .next_line_help(false)
         // version
         .disable_version_flag(true)
-        .arg(arg!(-v --version "Print version").value_parser(value_parser!(bool)))
+        .arg(
+            arg!(-v --version "Print version")
+                .action(ArgAction::SetTrue)
+                .value_parser(value_parser!(bool)),
+        )
         // license
-        .arg(arg!(--license "Print license").value_parser(value_parser!(bool)))
+        .arg(
+            arg!(--license "Print license")
+                .action(ArgAction::SetTrue)
+                .value_parser(value_parser!(bool)),
+        )
         // build info
-        .arg(arg!(--"build-info" "Print build information" ).value_parser(value_parser!(bool)))
+        .arg(
+            arg!(--"build-info" "Print build information" )
+                .action(ArgAction::SetTrue)
+                .value_parser(value_parser!(bool)),
+        )
         .group(ArgGroup::new("readonly-info-args").multiple(false).args([
             "version",
             "license",
@@ -42,12 +58,13 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
         ]))
         // input file
         .arg(
-            arg!([FILE] "Input file to process")
-                .value_parser(value_parser!(PathBuf))
-                .required_unless_present("readonly-info-args"),
+            arg!([INPUT] "Input file path, raw string, or omit to read from stdin")
+                .action(ArgAction::Set)
+                .value_parser(ValueParser::new(parse_input)),
         )
-        .group(ArgGroup::new("run-args").multiple(true).args(["FILE"]))
-        .get_matches();
+        .group(ArgGroup::new("run-args").multiple(true).args(["INPUT"]));
+
+    let matches = command.get_matches();
 
     if matches.get_flag("license") {
         print_license();
@@ -60,14 +77,23 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, Box<dyn std::error::Error>> {
         std::process::exit(0);
     }
 
-    let file_path = matches
-        .get_one::<PathBuf>("FILE")
-        .expect("<FILE> is a required argument")
-        .to_owned()
-        .canonicalize()
-        .expect("Failed to canonicalize file path");
+    let input = matches
+        .get_one::<Input>("INPUT")
+        .cloned()
+        .unwrap_or(Input::None);
 
-    Ok(Args::new(file_path))
+    Ok(Args::new(input))
+}
+
+fn parse_input(input_str: &str) -> Result<Input, clap::Error> {
+    let path = Path::new(input_str);
+    if path.exists() {
+        Ok(Input::File(path.canonicalize().map_err(|e| {
+            clap::Error::raw(clap::error::ErrorKind::Io, e)
+        })?))
+    } else {
+        Ok(Input::Raw(input_str.to_string()))
+    }
 }
 
 fn print_license() {
