@@ -57,7 +57,7 @@ jobs:
                   tar: unix
                   zip: windows
                   checksum: sha256
-                  include: LICENSE.txt, crates/arams-cli/README.md
+                  include: LICENSE.txt,crates/arams-cli/README.md
                   token: ${{ secrets.GITHUB_TOKEN }}
 
     publish-wasm-package:

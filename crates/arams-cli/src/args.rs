@@ -2,20 +2,28 @@ use crate::constants::{
     BIN_NAME, BUILD_TIMESTAMP_UTC, LAST_COMMIT_DATE, LAST_COMMIT_ID, LAST_COMMIT_ID_LONG, VERSION,
 };
 use clap::{ArgAction, ArgGroup, arg, builder::ValueParser, command, value_parser};
-use std::path::{Path, PathBuf};
+use std::{
+    collections::HashMap,
+    path::{Path, PathBuf},
+};
 
 #[derive(Debug)]
 pub(crate) struct Args {
     input: Input,
+    registers: HashMap<usize, u64>,
 }
 
 impl Args {
-    pub(crate) fn new(input: Input) -> Self {
-        Self { input }
+    pub(crate) fn new(input: Input, registers: HashMap<usize, u64>) -> Self {
+        Self { input, registers }
     }
 
     pub(crate) fn input(&self) -> &Input {
         &self.input
+    }
+
+    pub(crate) fn registers(&self) -> &HashMap<usize, u64> {
+        &self.registers
     }
 }
 
@@ -62,6 +70,7 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, clap::Error> {
                 .action(ArgAction::Set)
                 .value_parser(ValueParser::new(parse_input)),
         )
+        .arg(arg!(-r --registers <VALUES> "Preseed the registers of the simulated machine (format: [(1,2),(2,4)], default: all registers at 0)").action(ArgAction::Set).value_parser(parse_register_preseed))
         .group(ArgGroup::new("run-args").multiple(true).args(["INPUT"]));
 
     let matches = command.get_matches();
@@ -82,7 +91,12 @@ pub(crate) fn parse_args_or_exit() -> Result<Args, clap::Error> {
         .cloned()
         .unwrap_or(Input::None);
 
-    Ok(Args::new(input))
+    let registers = matches
+        .get_one::<HashMap<usize, u64>>("registers")
+        .cloned()
+        .unwrap_or_else(HashMap::new);
+
+    Ok(Args::new(input, registers))
 }
 
 fn parse_input(input_str: &str) -> Result<Input, clap::Error> {
@@ -94,6 +108,50 @@ fn parse_input(input_str: &str) -> Result<Input, clap::Error> {
     } else {
         Ok(Input::Raw(input_str.to_string()))
     }
+}
+
+fn parse_register_preseed(input_str: &str) -> Result<HashMap<usize, u64>, clap::Error> {
+    let trimmed = input_str.trim();
+    if trimmed.is_empty() {
+        return Ok(HashMap::new());
+    }
+
+    let pairs: Vec<&str> = trimmed
+        .trim_start_matches('[')
+        .trim_end_matches(']')
+        .split("),(")
+        .collect();
+
+    let mut register_map = HashMap::new();
+
+    for pair in pairs {
+        let clean_pair = pair.trim_matches(|c| c == '(' || c == ')');
+        let nums: Vec<&str> = clean_pair.split(',').collect();
+        if nums.len() != 2 {
+            return Err(clap::Error::raw(
+                clap::error::ErrorKind::InvalidValue,
+                format!("Invalid register pair: {}", pair),
+            ));
+        }
+
+        let reg_index: usize = nums[0].trim().parse().map_err(|e| {
+            clap::Error::raw(
+                clap::error::ErrorKind::InvalidValue,
+                format!("Invalid register index in pair {}: {}", pair, e),
+            )
+        })?;
+
+        let reg_value: u64 = nums[1].trim().parse().map_err(|e| {
+            clap::Error::raw(
+                clap::error::ErrorKind::InvalidValue,
+                format!("Invalid register value in pair {}: {}", pair, e),
+            )
+        })?;
+
+        register_map.insert(reg_index, reg_value);
+    }
+
+    Ok(register_map)
 }
 
 fn print_license() {

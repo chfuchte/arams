@@ -1,8 +1,9 @@
+use arams_core::{IntoSourceCode, compile, execute};
+
 use crate::{
     args::{Input, parse_args_or_exit},
     errors::{Error, StatusCode},
 };
-use arams_core::IntoSourceCode;
 
 mod args;
 mod constants;
@@ -28,7 +29,17 @@ fn run() -> Result<(), Error> {
         Input::None => fs::read_stdin()?,
     };
 
-    println!("Read {} lines.", contents.len());
+    let registers = args.registers();
+
+    let program = compile(contents).map_err(Error::ARAMSFailedToCompile)?;
+    let machine = execute(program, Some(registers.clone())).map_err(Error::ARAMSFailedToExecute)?;
+
+    println!("Machine State After Execution:");
+    println!("Accumulator: {}", machine.get_accumulator());
+    println!("Registers:");
+    for (name, value) in machine.get_registers().iter() {
+        println!("  {}: {}", name, value);
+    }
 
     Ok(())
 }
