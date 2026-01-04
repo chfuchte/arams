@@ -1,100 +1,77 @@
-use crate::{
-    errors::RuntimeError,
-    machine::{Register, Value},
-};
+use crate::errors::RuntimeError;
 use std::collections::HashMap;
 
 pub struct ProgramBuilder {
-    lines: Vec<Line>,
-    labels: HashMap<Label, LineNumber>,
+    instructions: Vec<Instruction>,
+    labels: HashMap<String, usize>,
 }
 
 impl ProgramBuilder {
     pub fn new() -> Self {
         Self {
-            lines: Vec::new(),
+            instructions: Vec::new(),
             labels: HashMap::new(),
         }
     }
 
-    pub fn add_line(&mut self, line: Line) {
-        self.lines.push(line);
+    pub fn add_instruction(&mut self, instruction: Instruction) {
+        self.instructions.push(instruction);
     }
 
-    pub fn add_label(&mut self, label: Label, position: LineNumber) {
-        self.labels.insert(label, position);
+    pub fn add_label(&mut self, label: String) {
+        self.labels.insert(label, self.instructions.len());
     }
 
     pub fn build(self) -> Program {
-        Program::new(self.lines, self.labels)
+        Program::new(self.instructions, self.labels)
     }
 
-    pub fn current_instruction_index(&self) -> LineNumber {
-        self.lines.len()
+    pub fn label_exists(&self, label: &String) -> bool {
+        self.labels.contains_key(label)
     }
 }
 
+#[derive(Clone, Debug)]
 pub struct Program {
-    pub lines: Vec<Line>,
-    pub labels: HashMap<Label, LineNumber>,
-    program_counter: LineNumber,
+    instructions: Vec<Instruction>,
+    labels: HashMap<String, usize>,
+    program_counter: usize,
 }
 
 impl Program {
-    pub(crate) fn new(lines: Vec<Line>, labels: HashMap<Label, LineNumber>) -> Self {
+    pub(crate) fn new(
+        instructions: Vec<Instruction>,
+        labels: HashMap<String, usize>,
+    ) -> Self {
         Self {
-            lines,
+            instructions,
             labels,
             program_counter: 0,
         }
     }
 
-    pub fn fetch(&mut self) -> Option<Line> {
-        let line = self.lines.get(self.program_counter)?.clone();
-        Some(line)
+    pub fn fetch(&mut self) -> Option<Instruction> {
+        let instruction = self.instructions.get(self.program_counter)?.clone();
+        Some(instruction)
     }
 
     pub fn advance(&mut self) {
         self.program_counter += 1;
     }
 
-    pub fn goto(&mut self, label: &Label) -> Result<(), RuntimeError> {
+    pub fn goto(&mut self, label: &String) -> Result<(), RuntimeError> {
         if let Some(&line_number) = self.labels.get(label) {
             self.program_counter = line_number;
             Ok(())
         } else {
-            Err(RuntimeError::AnyError(format!(
-                "Label '{}' not found",
-                label
-            )))
+            Err(RuntimeError::UnknownString {
+                label: label.to_string(),
+            })
         }
     }
 }
 
-#[derive(Clone, Debug)]
-pub struct Line {
-    instruction: Instruction,
-    line_number: LineNumber,
-}
-
-impl Line {
-    pub fn new(instruction: Instruction, line_number: LineNumber) -> Self {
-        Self {
-            instruction,
-            line_number,
-        }
-    }
-
-    pub fn instruction(&self) -> &Instruction {
-        &self.instruction
-    }
-
-    pub fn line_number(&self) -> LineNumber {
-        self.line_number
-    }
-}
-
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Instruction {
     Load(Operand),
     Store(Address),
@@ -102,25 +79,21 @@ pub enum Instruction {
     Sub(Operand),
     Mul(Operand),
     Div(Operand),
-    Goto(Label),
-    Jzero(Label),
-    Jnzero(Label),
+    Goto(String),
+    Jzero(String),
+    Jnzero(String),
     End,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Operand {
-    Immediate(Value),
-    DirectAddress(Register),
-    IndirectAddress(Register),
+    Immediate(u64),
+    DirectAddress(usize),
+    IndirectAddress(usize),
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Address {
-    Direct(Register),
-    Indirect(Register),
+    Direct(usize),
+    Indirect(usize),
 }
-
-pub type Label = String;
-
-pub type LineNumber = usize;

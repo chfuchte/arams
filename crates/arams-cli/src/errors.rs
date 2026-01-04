@@ -2,6 +2,7 @@ pub(crate) enum StatusCode {
     Success = 0,
     UserError = 1,
     SystemError = 2,
+    ARAMSError = 3,
 }
 
 impl From<StatusCode> for i32 {
@@ -15,6 +16,8 @@ pub(crate) enum Error {
     FailedToParseArgs(clap::Error),
     IOFailedToReadFile(std::io::Error),
     IOFailedToReadFromStdIn(std::io::Error),
+    ARAMSFailedToCompile(Vec<arams_core::CompileError>),
+    ARAMSFailedToExecute(arams_core::RuntimeError),
     NoInput,
 }
 
@@ -24,6 +27,8 @@ impl Error {
             Error::FailedToParseArgs(_) => StatusCode::SystemError,
             Error::IOFailedToReadFile(_) => StatusCode::SystemError,
             Error::IOFailedToReadFromStdIn(_) => StatusCode::SystemError,
+            Error::ARAMSFailedToCompile(_) => StatusCode::ARAMSError,
+            Error::ARAMSFailedToExecute(_) => StatusCode::ARAMSError,
             Error::NoInput => StatusCode::UserError,
         }
     }
@@ -59,6 +64,14 @@ impl std::fmt::Display for Error {
                     "No input provided. Please provide a file path, a raw string argument, or pipe data into stdin."
                 )
             }
+            Error::ARAMSFailedToCompile(errors) => {
+                writeln!(f, "Failed to compile program:")?;
+                for error in errors {
+                    writeln!(f, "{}", error)?;
+                }
+                Ok(())
+            }
+            Error::ARAMSFailedToExecute(e) => write!(f, "Error while executing program:\n{}", e),
         }
     }
 }

@@ -8,3 +8,11 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+
+[dev-dependencies]
+criterion = "0.8.1"
+
+[[bench]]
+name = "factorial"
+path = "benches/factorial.rs"
+harness = false

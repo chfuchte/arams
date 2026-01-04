@@ -1,0 +1,107 @@
+name: Release Pipeline
+
+run-name: Release ${{ github.event.release.tag_name }}
+
+on:
+    release:
+        types: [created]
+    workflow_dispatch:
+
+jobs:
+    create-release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Create Release
+              uses: taiki-e/create-gh-release-action@v1
+              with:
+                  changelog: CHANGELOG.md
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+    cli-prebuilds:
+        needs: create-release
+        permissions:
+            contents: write
+        strategy:
+            matrix:
+                include:
+                    # Mac OS
+                    - target: aarch64-apple-darwin # Apple Silicon
+                      os: macos-latest
+                    - target: x86_64-apple-darwin # Intel
+                      os: macos-latest
+                    # Windows
+                    - target: x86_64-pc-windows-msvc # 64-bit Windows
+                      os: windows-latest
+                    # Linux
+                    - target: x86_64-unknown-linux-gnu # 64-bit Linux
+                      os: ubuntu-latest
+                    - target: aarch64-unknown-linux-gnu # ARM 64-bit Linux
+                      os: ubuntu-latest
+        runs-on: ${{ matrix.os }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Setup cross compilation toolchain
+              uses: taiki-e/setup-cross-toolchain-action@v1
+              with:
+                  target: ${{ matrix.target }}
+            - name: Upload Rust binaries as release assets
+              uses: taiki-e/upload-rust-binary-action@v1
+              with:
+                  bin: arams
+                  target: ${{ matrix.target }}
+                  tar: unix
+                  zip: windows
+                  checksum: sha256
+                  include: LICENSE.txt,crates/arams-cli/README.md
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+    publish-wasm-package:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Install Rust
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: wasm32-unknown-unknown
+            - name: Install wasm-pack
+              run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+            - name: Build WASM
+              run: |
+                  wasm-pack build crates/arams-wasm \
+                    --target web \
+                    --out-dir pkg \
+                    --release
+            - name: Prepare package for publishing
+              run: |
+                  mkdir -p dist
+                  cp -r crates/arams-wasm/pkg/* dist/
+                  cp crates/arams-wasm/README.md dist/ || true
+                  cp LICENSE.txt dist/ || true
+                  cd dist
+                  node -e "
+                    const fs = require('fs');
+                    const p = 'package.json';
+                    const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
+                    pkg.name = '@chfuchte/arams';
+                    pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+                    fs.writeFileSync(p, JSON.stringify(pkg, null, 2));"
+                  npm pkg fix
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: https://npm.pkg.github.com/
+            - name: Publish to GitHub npm registry
+              run: npm publish --registry https://npm.pkg.github.com
+              working-directory: dist
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
