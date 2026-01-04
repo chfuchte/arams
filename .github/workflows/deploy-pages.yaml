@@ -1,14 +1,13 @@
 name: Deploy to Github Pages
 
+run-name: Deploy to Github Pages ${{ github.ref_name }}
+
 permissions:
     contents: read
     pages: write
     id-token: write
 
 on:
-    release:
-        types: [created]
-
     workflow_dispatch:
 
 concurrency:
@@ -20,7 +19,6 @@ env:
 
 jobs:
     deploy:
-        if: ${{ !github.event.release.prerelease }}
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
