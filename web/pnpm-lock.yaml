@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@chfuchte/arams':
-        specifier: 0.1.0-alpha
-        version: 0.1.0-alpha
+        specifier: 0.1.0
+        version: 0.1.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -141,8 +141,8 @@ packages:
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
-  '@chfuchte/arams@0.1.0-alpha':
-    resolution: {integrity: sha512-HPwKaCngKftzBNRN7nLdD0knCSClsHdXfQFdueLnDpon4ZR7RzB01WIVdBSWEEuKrmRcqyQbEpWO5T7rQm61ew==, tarball: https://npm.pkg.github.com/download/@chfuchte/arams/0.1.0-alpha/3db78aa143e6081ecbf2adbce8691d384acf3812}
+  '@chfuchte/arams@0.1.0':
+    resolution: {integrity: sha512-dcJ8IRjGc8ICnDGnow5uHsNN6L+dyIzPDzKbZloMbvxDBP0Bw9SvWHhm+dFsN88awII+vkx8jBwYonnn2R7REg==, tarball: https://npm.pkg.github.com/download/@chfuchte/arams/0.1.0/25f536688b1d1a4d8d22de4987a6deb7a44eeeaa}
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -1136,7 +1136,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@chfuchte/arams@0.1.0-alpha': {}
+  '@chfuchte/arams@0.1.0': {}
 
   '@esbuild/aix-ppc64@0.27.2':
     optional: true
