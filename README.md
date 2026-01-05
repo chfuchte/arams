@@ -10,6 +10,8 @@ The detailed specifications for the ARAMS simulator can be found in the `docs` d
 
 - [RAM Specification](docs/ram-spec.md) Describes the abstract machine model and its structure.
 - [Language Specification](docs/language-spec.md) Defines the RAM assembly language syntax, instructions and operands.
+- [CLI](crates/arams-cli/README.md) Documentation for using the command-line interface to run and debug ARAMS programs.
+- [WASM Package](crates/arams-wasm/README.md) Guide for the published NPM package, enabling ARAMS execution directly in your browser.
 
 ## License
 

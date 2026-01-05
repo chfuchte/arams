@@ -20,3 +20,33 @@ export const DayNight = (props: ComponentProps<"svg">) => (
         />
     </svg>
 );
+
+export const Run = (props: ComponentProps<"svg">) => (
+    <svg viewBox="0 0 24 24" height={24} width={24} {...props}>
+        <path d="M8,5.14V19.14L19,12.14L8,5.14Z" class="fill-inherit" />
+    </svg>
+);
+
+export const TrashCan = (props: ComponentProps<"svg">) => (
+    <svg viewBox="0 0 24 24" height={24} width={24} {...props}>
+        <path
+            d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"
+            class="fill-inherit"
+        />
+    </svg>
+);
+
+export const Reset = (props: ComponentProps<"svg">) => (
+    <svg viewBox="0 0 24 24" height={24} width={24} {...props}>
+        <path
+            d="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z"
+            class="fill-inherit"
+        />
+    </svg>
+);
+
+export const Format = (props: ComponentProps<"svg">) => (
+    <svg viewBox="0 0 24 24" height={24} width={24} {...props}>
+        <path d="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z" />
+    </svg>
+);
