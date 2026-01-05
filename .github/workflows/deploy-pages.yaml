@@ -6,6 +6,7 @@ permissions:
     contents: read
     pages: write
     id-token: write
+    packages: read
 
 on:
     workflow_dispatch:
