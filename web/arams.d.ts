@@ -7,7 +7,7 @@ declare module "@chfuchte/arams" {
      * @returns true if the code is valid, otherwise an array of error messages with line numbers
      */
     function check(input: string | string[]):
-        | boolean
+        | true
         | Array<{
               line: number;
               message: string;
