@@ -1,4 +1,4 @@
-import { check, run } from "@chfuchte/arams";
+import { run } from "@chfuchte/arams";
 import { Component } from "solid-js";
 
 export const WASMTest: Component = () => {
@@ -20,10 +20,10 @@ return_one: load #1
 break:      load 2
             end`;
 
-    const regs = new Map<Number, Number>();
-    regs.set(1, 5);
+    const regs = new Map<number, number>();
+    regs.set(1, 1);
 
     console.log(run(code, regs));
 
-    return <h1>{check("load 1") ? "Success" : "Failure"}</h1>;
+    return null;
 };
