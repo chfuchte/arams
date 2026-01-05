@@ -37,8 +37,10 @@ fn run() -> Result<(), Error> {
     println!("Machine State After Execution:");
     println!("Accumulator: {}", machine.get_accumulator());
     println!("Registers:");
-    for (name, value) in machine.get_registers().iter() {
-        println!("  {}: {}", name, value);
+    let mut registers: Vec<_> = machine.get_registers().iter().collect();
+    registers.sort_by_key(|(key, _)| *key);
+    for (key, value) in registers {
+        println!("  {}: {}", key, value);
     }
 
     Ok(())
