@@ -1,7 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type * as wasm from "./dist/arams_wasm.d.ts";
+export * from "./arams_wasm";
+export { default } from "./arams_wasm";
 
 export type SourceCode = string | string[];
 
@@ -35,5 +36,3 @@ export declare function run(
     | { status: "executionerror"; execution_error: ExecutionError };
 
 export declare function analyze(input: SourceCode): AnalyzeToken[][];
-
-export { wasm };
