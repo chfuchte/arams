@@ -16,3 +16,8 @@ criterion = "0.8.1"
 name = "factorial"
 path = "benches/factorial.rs"
 harness = false
+
+[[bench]]
+name = "lsp"
+path = "benches/lsp.rs"
+harness = false

@@ -39,10 +39,7 @@ pub struct Program {
 }
 
 impl Program {
-    pub(crate) fn new(
-        instructions: Vec<Instruction>,
-        labels: HashMap<String, usize>,
-    ) -> Self {
+    pub(crate) fn new(instructions: Vec<Instruction>, labels: HashMap<String, usize>) -> Self {
         Self {
             instructions,
             labels,
@@ -64,7 +61,7 @@ impl Program {
             self.program_counter = line_number;
             Ok(())
         } else {
-            Err(RuntimeError::UnknownString {
+            Err(RuntimeError::UnknownLabel {
                 label: label.to_string(),
             })
         }

@@ -47,7 +47,7 @@ impl std::fmt::Display for CompileError {
                     self.context, self.line_number
                 )
             }
-            CompileErrorKind::DuplicateStringDefinition => {
+            CompileErrorKind::DuplicateLabelDefinition => {
                 write!(
                     f,
                     "Duplicate label definition '{}' at line {}",
@@ -79,21 +79,21 @@ pub enum CompileErrorKind {
     UnknownToken,
     ExpectedToken,
     UnexpectedToken,
-    DuplicateStringDefinition,
+    DuplicateLabelDefinition,
     MissingArgument,
     InvalidArgument,
 }
 
 #[derive(Debug)]
 pub enum RuntimeError {
-    UnknownString { label: String },
+    UnknownLabel { label: String },
     MachineStopped,
 }
 
 impl std::fmt::Display for RuntimeError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            RuntimeError::UnknownString { label } => {
+            RuntimeError::UnknownLabel { label } => {
                 write!(f, "Tried to jump to unknown label '{}'", label)
             }
             RuntimeError::MachineStopped => {
