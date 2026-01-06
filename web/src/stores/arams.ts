@@ -40,7 +40,7 @@ loop:\t\tload 1\n\
 return_one:\tload #1\n\
 \t\t\tend\n\
 break:\t\tload 2\n\
-\t\t\tend\n",
+\t\t\tend",
 });
 
 export { aramsStore, setAramsStore };

@@ -4,7 +4,7 @@ import { Component } from "solid-js";
 
 export function tokenKindToVariant(
     kind: Exclude<TokenKind, "newline">,
-): "unknown" | "instruction" | "argument" | "comment" | "error" | "label_definition" {
+): "unknown" | "instruction" | "argument" | "label" | "comment" | "error" {
     switch (kind) {
         case "add":
             return "instruction";
@@ -25,11 +25,11 @@ export function tokenKindToVariant(
         case "jnzero":
             return "instruction";
         case "jump_argument":
-            return "argument";
+            return "label";
         case "jzero":
             return "instruction";
         case "label_definition":
-            return "label_definition";
+            return "label";
         case "load":
             return "instruction";
         case "mul":
@@ -52,11 +52,11 @@ export const Pre: Component<{
     const tokenVariants = cva("leading-5 font-medium", {
         variants: {
             variant: {
-                unknown: "dark:text-neutral-200 text-neutral-800",
-                instruction: "dark:text-neutral-200 text-neutral-800",
-                argument: "text-green-500",
+                unknown: "dark:text-neutral-400 text-neutral-600",
+                instruction: "dark:text-neutral-100 text-neutral-800",
+                argument: "dark:text-orange-400 text-orange-500",
                 comment: "text-muted-foreground",
-                label_definition: "text-blue-500",
+                label: "text-purple-500",
                 error: "text-destructive",
             },
         },
@@ -78,24 +78,4 @@ export const Line: Component<{ tokens: TokenType[]; errors: string[] }> = ({ tok
             {errors.length > 0 && <Pre value={`\t ${errors.join(", ")}`} variant="error" />}
         </div>
     );
-};
-
-export const Token: Component<{
-    variant: "plain" | "comment" | "error";
-    value: string | undefined;
-}> = ({ variant, value }) => {
-    const tokenVariants = cva("leading-5 font-medium", {
-        variants: {
-            variant: {
-                plain: "dark:text-neutral-200 text-neutral-800  ",
-                comment: "text-muted-foreground",
-                error: "text-destructive",
-            },
-        },
-        defaultVariants: {
-            variant: "plain",
-        },
-    });
-
-    return <pre class={tokenVariants({ variant })}>{value}</pre>;
 };

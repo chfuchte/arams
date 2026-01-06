@@ -1,17 +1,17 @@
 import { createEffect, createMemo, createSignal, onMount, type Component } from "solid-js";
-import { Line } from "./line";
+import { Line } from "./token";
+import { intoTokens } from "@/lib/arams";
 
 export const CodeEditor: Component<{
     code: () => string;
     setCode: (code: string) => void;
-    errors: () => Record<number, string[]> | undefined;
-}> = ({ code, setCode, errors }) => {
+}> = ({ code, setCode }) => {
     const [visibleLinesBounds, setVisibleLinesBounds] = createSignal<[number, number]>([0, 0]);
 
-    const lines = createMemo(() => code().split("\n"));
+    const tokenizedLines = createMemo(() => intoTokens(code()));
     const visibleLines = createMemo(() => {
         const [start, end] = visibleLinesBounds();
-        return lines().slice(start, end);
+        return tokenizedLines().slice(start, end);
     });
 
     let textareaRef: HTMLTextAreaElement | undefined;
@@ -66,7 +66,7 @@ export const CodeEditor: Component<{
 
             const buffer = 10;
             start = Math.max(0, Math.floor(scroll / lineHeight) - buffer);
-            end = Math.min(lines().length, Math.ceil((scroll + height) / lineHeight) + buffer);
+            end = Math.min(tokenizedLines().length, Math.ceil((scroll + height) / lineHeight) + buffer);
         }
 
         setVisibleLinesBounds([start, end]);
@@ -86,8 +86,8 @@ export const CodeEditor: Component<{
                 </div>
 
                 <div class="flex-1 pl-4">
-                    {visibleLines().map((line, i) => (
-                        <Line code={line} errors={errors()?.[i + 1] || []} />
+                    {visibleLines().map((line) => (
+                        <Line tokens={line.tokens} errors={line.errors} />
                     ))}
                 </div>
             </div>

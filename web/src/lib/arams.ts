@@ -29,6 +29,8 @@ export type TokenKind =
 export function intoTokens(input: string): Array<{ tokens: Token[]; errors: string[] }> {
     const lines = analyze(input);
 
+    console.log(lines);
+
     return lines.map((line) => {
         const lineErrors: string[] = [];
         const tokens = line.map((t) => {
