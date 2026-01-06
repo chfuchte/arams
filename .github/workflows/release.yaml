@@ -94,6 +94,7 @@ jobs:
                     const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
                     pkg.name = '@chfuchte/arams';
                     pkg.types = 'arams.d.ts';
+                    pkg.files.push('arams.d.ts');
                     pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
                     fs.writeFileSync(p, JSON.stringify(pkg, null, 2));"
                   npm pkg fix

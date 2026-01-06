@@ -30,3 +30,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - N/A
+
+## [0.1.1] - 2026-01-06
+
+### Added
+
+- core: `analyze` "lsp" functionality for syntax highlighting and checking
+- proper typings for wasm-package
+
+### Changed
+
+- N/A
+
+### Deprecated
+
+- N/A
+
+### Removed
+
+- wasm: `check()` function removed (replaced with `analyze`)
+
+### Fixed
+
+- cli: print registers sorted to console
+
+### Security
+
+- N/A
