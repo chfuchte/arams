@@ -37,6 +37,9 @@ fn factorial_program_gets_analyzed() {
     // line 2: store // no argument here to trigger an error
     assert_eq!(lines[1][0].kind(), &LSPTokenKind::Store);
     assert_eq!(lines[1][0].lexeme(), "store");
-    assert_eq!(lines[1][1 ].errors().len(), 1);
-    assert!(matches!(lines[1][1].errors()[0], LSPError::InvalidArgument(_)));
+    assert_eq!(lines[1][1].errors().len(), 1);
+    assert!(matches!(
+        lines[1][1].errors()[0],
+        LSPError::InvalidArgument(_)
+    ));
 }

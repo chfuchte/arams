@@ -1,6 +1,6 @@
-mod token;
-mod errors;
 mod analyzer;
+mod errors;
+mod token;
 
 pub use analyzer::analyze;
 pub use errors::LSPError;

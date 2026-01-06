@@ -51,27 +51,27 @@ pub enum LSPTokenKind {
     Unknown,
 }
 
-impl ToString for LSPTokenKind {
-    fn to_string(&self) -> String {
+impl std::fmt::Display for LSPTokenKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            LSPTokenKind::Load => "load".to_string(),
-            LSPTokenKind::Store => "store".to_string(),
-            LSPTokenKind::Add => "add".to_string(),
-            LSPTokenKind::Sub => "sub".to_string(),
-            LSPTokenKind::Mul => "mul".to_string(),
-            LSPTokenKind::Div => "div".to_string(),
-            LSPTokenKind::Goto => "goto".to_string(),
-            LSPTokenKind::Jzero => "jzero".to_string(),
-            LSPTokenKind::Jnzero => "jnzero".to_string(),
-            LSPTokenKind::End => "end".to_string(),
-            LSPTokenKind::LabelDefinition => "label_definition".to_string(),
-            LSPTokenKind::JumpArgument => "jump_argument".to_string(),
-            LSPTokenKind::ImmediateArgument => "immediate_argument".to_string(),
-            LSPTokenKind::IndirectAddressArgument => "indirect_address_argument".to_string(),
-            LSPTokenKind::DirectAddressArgument => "direct_address_argument".to_string(),
-            LSPTokenKind::Comment => "comment".to_string(),
-            LSPTokenKind::NewLine => "newline".to_string(),
-            LSPTokenKind::Unknown => "unknown".to_string(),
+            LSPTokenKind::Load => write!(f, "load"),
+            LSPTokenKind::Store => write!(f, "store"),
+            LSPTokenKind::Add => write!(f, "add"),
+            LSPTokenKind::Sub => write!(f, "sub"),
+            LSPTokenKind::Mul => write!(f, "mul"),
+            LSPTokenKind::Div => write!(f, "div"),
+            LSPTokenKind::Goto => write!(f, "goto"),
+            LSPTokenKind::Jzero => write!(f, "jzero"),
+            LSPTokenKind::Jnzero => write!(f, "jnzero"),
+            LSPTokenKind::End => write!(f, "end"),
+            LSPTokenKind::LabelDefinition => write!(f, "label_definition"),
+            LSPTokenKind::JumpArgument => write!(f, "jump_argument"),
+            LSPTokenKind::ImmediateArgument => write!(f, "immediate_argument"),
+            LSPTokenKind::IndirectAddressArgument => write!(f, "indirect_address_argument"),
+            LSPTokenKind::DirectAddressArgument => write!(f, "direct_address_argument"),
+            LSPTokenKind::Comment => write!(f, "comment"),
+            LSPTokenKind::NewLine => write!(f, "newline"),
+            LSPTokenKind::Unknown => write!(f, "unknown"),
         }
     }
 }

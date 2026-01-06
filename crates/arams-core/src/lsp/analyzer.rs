@@ -7,7 +7,7 @@ use crate::{
 pub fn analyze(source_code: impl IntoSourceCode) -> Vec<Vec<LSPToken>> {
     let lines = source_code.into_lines();
 
-    let lsp_lines = lines
+    lines
         .iter()
         .enumerate()
         .map(|(line_number, line_str)| {
@@ -229,9 +229,7 @@ pub fn analyze(source_code: impl IntoSourceCode) -> Vec<Vec<LSPToken>> {
 
             tokens
         })
-        .collect();
-
-    lsp_lines
+        .collect()
 }
 
 fn analyze_operand(s: &str) -> LSPToken {

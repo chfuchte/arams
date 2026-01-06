@@ -39,10 +39,7 @@ pub struct Program {
 }
 
 impl Program {
-    pub(crate) fn new(
-        instructions: Vec<Instruction>,
-        labels: HashMap<String, usize>,
-    ) -> Self {
+    pub(crate) fn new(instructions: Vec<Instruction>, labels: HashMap<String, usize>) -> Self {
         Self {
             instructions,
             labels,
