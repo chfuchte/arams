@@ -64,7 +64,7 @@ impl Program {
             self.program_counter = line_number;
             Ok(())
         } else {
-            Err(RuntimeError::UnknownString {
+            Err(RuntimeError::UnknownLabel {
                 label: label.to_string(),
             })
         }

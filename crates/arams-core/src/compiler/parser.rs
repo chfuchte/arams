@@ -210,7 +210,7 @@ pub(crate) fn parse(tokens: Vec<Token>) -> Result<Program, Vec<CompileError>> {
                 if program_builder.label_exists(value) {
                     errors.push(CompileError::new(
                         *line_number,
-                        CompileErrorKind::DuplicateStringDefinition,
+                        CompileErrorKind::DuplicateLabelDefinition,
                         value.to_string(),
                     ));
                     continue;

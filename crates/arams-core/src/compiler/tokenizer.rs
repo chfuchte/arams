@@ -75,6 +75,14 @@ pub fn tokenize(source_code: impl IntoSourceCode) -> Result<Vec<Token>, Vec<Comp
                 }
                 _ if word.ends_with(':') => {
                     let label_name = word.trim_end_matches(':').to_string();
+                    if label_name.is_empty() {
+                        errors.push(CompileError::new(
+                            line_number + 1,
+                            CompileErrorKind::UnknownToken,
+                            word.to_string(),
+                        ));
+                        continue;
+                    }
                     tokens.push(Token::LabelDefinition {
                         line_number: line_number + 1,
                         value: label_name,
