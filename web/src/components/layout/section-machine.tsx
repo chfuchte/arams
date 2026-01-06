@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Component, ComponentProps, createEffect, createSignal } from "solid-js";
+import { Component, ComponentProps, createEffect, createSignal, onMount } from "solid-js";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { aramsStore, setAramsStore } from "@/stores/arams";
 

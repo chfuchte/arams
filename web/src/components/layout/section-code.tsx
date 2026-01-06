@@ -1,26 +1,20 @@
 import { Component, ComponentProps, createEffect, createSignal } from "solid-js";
 import { CodeEditor } from "../editor";
 import { aramsStore, setAramsStore } from "@/stores/arams";
-import { check } from "@chfuchte/arams";
 import { cn } from "@/lib/utils";
+import { intoTokens } from "@/lib/arams";
 
 export const CodeEditorSection: Component<ComponentProps<"section">> = ({ class: className, ...props }) => {
     const [errors, setErrors] = createSignal<Record<number, string[]> | undefined>(undefined);
 
     createEffect(() => {
-        const checkCodeResult = check(aramsStore.sourcecode);
+        const lines = intoTokens(aramsStore.sourcecode);
 
-        if (checkCodeResult === true) {
-            setErrors(undefined);
-            return;
-        }
-
-        const errorsByLine: Record<number, string[]> = checkCodeResult.reduce(
-            (acc, curr) => {
-                if (!acc[curr.line]) {
-                    acc[curr.line] = [];
+        const errorsByLine: Record<number, string[]> = lines.reduce(
+            (acc, line, lineNumber) => {
+                if (line.errors.length > 0) {
+                    acc[lineNumber + 1] = line.errors;
                 }
-                acc[curr.line].push(curr.message);
                 return acc;
             },
             {} as Record<number, string[]>,
