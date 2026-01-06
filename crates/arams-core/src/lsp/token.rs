@@ -77,8 +77,8 @@ impl ToString for LSPTokenKind {
 }
 
 impl LSPTokenKind {
-    pub fn get_about_text(self) -> String {
-        match self {
+    pub fn get_about_text(&self) -> String {
+        match &self {
             LSPTokenKind::Load => "Syntax: `load <operand>`\nLoads the value of the operand into the accumulator.".to_string(),
             LSPTokenKind::Store => "Syntax: `store <operand>`\nStores the value of the accumulator into the operand.".to_string(),
             LSPTokenKind::Add => "Syntax: `add <operand>`\nAdds the value of the operand to the accumulator.".to_string(),

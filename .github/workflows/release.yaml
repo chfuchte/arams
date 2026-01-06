@@ -84,6 +84,7 @@ jobs:
               run: |
                   mkdir -p dist
                   cp -r crates/arams-wasm/pkg/* dist/
+                  cp crates/arams-wasm/arams.d.ts dist/
                   cp crates/arams-wasm/README.md dist/ || true
                   cp LICENSE.txt dist/ || true
                   cd dist
@@ -92,9 +93,11 @@ jobs:
                     const p = 'package.json';
                     const pkg = JSON.parse(fs.readFileSync(p, 'utf8'));
                     pkg.name = '@chfuchte/arams';
+                    pkg.types = 'arams.d.ts';
                     pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
                     fs.writeFileSync(p, JSON.stringify(pkg, null, 2));"
                   npm pkg fix
+
             - name: Setup Node.js
               uses: actions/setup-node@v6
               with:
