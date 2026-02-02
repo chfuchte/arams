@@ -13,7 +13,7 @@ path = "src/main.rs"
 
 [dependencies]
 arams-core = { workspace = true }
-clap = { version = "4.5.54", features = ["cargo"] }
+clap = { version = "4.5.56", features = ["cargo"] }
 
 [build-dependencies]
 chrono = "0.4.42"
