@@ -10,7 +10,7 @@ repository.workspace = true
 [dependencies]
 
 [dev-dependencies]
-criterion = "0.8.1"
+criterion = "0.8.2"
 
 [[bench]]
 name = "factorial"
