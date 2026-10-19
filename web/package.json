@@ -19,7 +19,7 @@
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.18",
         "@types/node": "^25.0.3",
-        "prettier": "^3.7.4",
+        "prettier": "^3.9.10",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "solid-devtools": "^0.34.4",
         "tailwindcss": "^4.1.18",
