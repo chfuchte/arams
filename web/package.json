@@ -13,7 +13,7 @@
         "@chfuchte/arams": "0.1.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
-        "solid-js": "^1.9.10",
+        "solid-js": "^1.9.17",
         "tailwind-merge": "^3.4.0"
     },
     "devDependencies": {
